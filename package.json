@@ -6,4 +6,8 @@
   "author": {
     "name": ""
   }
+
+  "dependencies": {
+    "battlenet-api": "0.13.0"
+  }
 }
