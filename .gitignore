@@ -10,3 +10,6 @@
 /.vs/VSWorkspaceState.json
 /Hearth/bin
 /Hearth/obj/Debug
+/bin
+/obj/Debug
+/Hearth.njsproj.user

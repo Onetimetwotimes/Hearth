@@ -28,9 +28,19 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="index.html" />
+    <Content Include="res\jpeg\placeholder" />
+    <Content Include="res\scripts\apibridge.js" />
+    <Content Include="res\styles\styles.css" />
     <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="res\" />
+    <Folder Include="res\jpeg\" />
+    <Folder Include="res\scripts\" />
+    <Folder Include="res\styles\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
