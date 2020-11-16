@@ -1,0 +1,9 @@
+{
+  "name": "hearth",
+  "version": "0.0.0",
+  "description": "Hearth",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
