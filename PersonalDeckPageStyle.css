@@ -9,12 +9,12 @@ table,tr, td, th
     border: 2px solid black;
 }
 
-h2#deckName
+#deckName
 {
     text-align: center;
 }
 
-h3.deckInfo
+.deckInfo
 {
     margin-left: 10px;
 }
