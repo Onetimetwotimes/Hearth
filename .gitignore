@@ -8,3 +8,5 @@
 /Hearth/Hearth.njsproj.user
 /Hearth/Hearth.sln
 /.vs/VSWorkspaceState.json
+/Hearth/bin
+/Hearth/obj/Debug
