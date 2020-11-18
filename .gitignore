@@ -13,3 +13,5 @@
 /bin
 /obj/Debug
 /Hearth.njsproj.user
+/.vs/Hearth/config/applicationhost.config
+/res/client.json
