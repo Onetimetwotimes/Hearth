@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Hearth/v16/.suo
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/Hearth/Hearth.njsproj.user
+/Hearth/Hearth.sln
+/.vs/VSWorkspaceState.json
+/Hearth/bin
+/Hearth/obj/Debug
+/bin
+/obj/Debug
+/Hearth.njsproj.user
+/.vs/Hearth/config/applicationhost.config
+/res/client.json
