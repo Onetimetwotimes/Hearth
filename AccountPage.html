@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<!--Spreadsheet url https://api.apispreadsheets.com/data/3973/ -->
+<html>
+
+<head>
+    <title>Account Page</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="res/scripts/apibridge.js"></script>
+    <script src="res/scripts/AccountPageJS.js"></script>
+</head>
+<body>
+    <h1>Account Page</h1>
+    <form id="myForm">
+        <label>Username</label>
+        <br />
+        <input name="Username" />
+        <br />
+        <label>Password</label>
+        <br />
+        <input name="Password" />
+        <br />
+        <br />
+    </form>
+
+    <button onclick="CreateAccount()">Create Account</button>
+    <button onclick="LogIn()">Log In</button>
+
+    <h2 id="headline"></h2>
+</body>
+</html>
