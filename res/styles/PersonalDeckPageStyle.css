@@ -42,7 +42,13 @@ table,tr, td, th
 
 .cardDataSec:hover
 {
-  background-color: lightgray;
+  background-color: darkgray;
+}
+
+.active
+{
+  background-color: darkgray;
+  border: 1px solid black;
 }
 
 /* Dashed border */
