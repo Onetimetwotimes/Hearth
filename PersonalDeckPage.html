@@ -4,39 +4,56 @@
         <title>Personal Decks</title>
         <link rel="stylesheet" href="res/styles/PersonalDeckPageStyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="res/scripts/apibridge.js"></script>
         <script src="res/scripts/PersonalDeckPage.js"></script>
     </head>
     <!--Neck-->
-    <body>
-        <select name="testOptions" id="testDrop" onchange="showPage()">
-            <option value="deckBuilder">Deck Builder</option>
-            <option value="newDeckSetup">Deck Setup</option>
-            <option value="deckList">Deck List</option>
-        </select>
+    <body onload="showPage()">
+        <button onclick="showPage('deckBuilder');">Deck Builder</button>
+        <button onclick="showPage('newDeckSetup');">Deck Setup</button>
+        <button onclick="showPage('deckList');">Deck List</button>
+        <br/><br/><br/>
         <div id="deckBuilder">
-                <table>
-                    <tr>
-                        <th style="width: 50%;">
-                            <h1>Deck info</h1>
-                        </th>
-                        <th style="width: 50%;">
-                            <h1>Cards</h1>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h2 id="deckName">Name of deck</h2>
-                            <hr class="solid" />
-                            <h3 class="deckInfo" id="deckClass">Class of deck</h3>
-                            <h4 class="deckInfo" id="classInfo">Stuff about the chosen hero class thingy</h4>
-                            <h3 class="deckInfo" id="cardCount">0 / 30 cards</h3>
-                            <hr class="solid" />
-                        </td>
-                        <td>
-                            <p>This is where the card list will exist, as well as all of the sorting data</p>
-                        </td>
-                    </tr>
-                </table>
+                <!--Left side: deck-->
+                <aside style="width: 40%; float: left; position: fixed;">
+                    <table>
+                        <tr>
+                            <th>
+                                <h1>Deck info</h1>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h2 id="deckName">Name of deck</h2>
+                                <hr class="solid" />
+                                <h3 class="deckInfo" id="deckClass">Class of deck</h3>
+                                <h4 class="deckInfo" id="classInfo">Stuff about the chosen hero class thingy</h4>
+                                <h3 class="deckInfo" id="cardCount">0 / 30 cards</h3>
+                                <hr class="solid" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="deckCardList">
+
+                            </td>
+                        </tr>
+                    </table>   
+                </aside>
+                <!--Right side: Card List-->
+                <aside id="cardListMainSection" style="width: 55%; float: right;">
+                    <table>
+                        <tr>
+                            <th>
+                                <h1>Cards</h1>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td id="cardListSection" class="grid-container">
+                            </td>
+                        </tr>
+                    </table>
+                </aside>
         </div>
         <div id="newDeckSetup">
             <section>

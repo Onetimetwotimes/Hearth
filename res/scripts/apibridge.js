@@ -1,7 +1,9 @@
 const AUTH_TARGET = 'https://us.battle.net/oauth/authorize';
 const TOKEN_TARGET = 'https://us.battle.net/oauth/token';
+
 const CARDS_TARGET = 'https://us.api.blizzard.com/hearthstone/cards';
 const DECKS_TARGET = 'https://us.api.blizzard.com/hearthstone/deck';
+const CARDSEARCH_TARGET = 'https://us.api.blizzard.com/hearthstone/cards';
 
 var apiToken;
 

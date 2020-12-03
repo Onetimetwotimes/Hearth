@@ -19,10 +19,37 @@ table,tr, td, th
     margin-left: 10px;
 }
 
+.grid-container 
+{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
 
+.cardDataSec
+{
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  font-size: 30px;
+  background-repeat: no-repeat;
+  background-attachment: local;  
+  background-size: 100%;
+  width: 180px;
+  height: 275px
+}
 
+.cardDataSec:hover
+{
+  background-color: darkgray;
+}
 
-
+.active
+{
+  background-color: darkgray;
+  border: 1px solid black;
+}
 
 /* Dashed border */
 hr.dashed {
