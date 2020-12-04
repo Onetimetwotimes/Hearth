@@ -11,13 +11,34 @@ function CreateAccount() {
 
     if (user && pass) {
 
-        fetch("https://api.apispreadsheets.com/data/3973/", {
-            method: "POST",
-            body: JSON.stringify({ "data": { "Password": pass, "Username": user } }),
-        }).then(res => {
-            if (res.status === 201) {
+        fetch("https://api.apispreadsheets.com/data/3973/?query=select*from3973whereUsername='" + user + "'").then(res => {
+            if (res.status === 200) {
                 // SUCCESS
-                alert("Successful")
+                res.json().then(data => {
+                    const yourData = data
+                    var result = yourData.data.filter(obj => {
+                        return obj.Username === user
+                    })
+                    //console.log(result)
+                    if (result.length != 0 && result[0].Username == user) {                    
+                        document.getElementById("headline").innerHTML = "User Already exist";
+                    }
+                    else {
+                        fetch("https://api.apispreadsheets.com/data/3973/", {
+                            method: "POST",
+                            body: JSON.stringify({ "data": { "Password": pass, "Username": user } }),
+                        }).then(res => {
+                            if (res.status === 201) {
+                                // SUCCESS
+                                alert("Successful")
+                            }
+                            else {
+                                // ERROR
+                            }
+                        })
+                    }
+
+                }).catch(err => console.log(err))
             }
             else {
                 // ERROR
