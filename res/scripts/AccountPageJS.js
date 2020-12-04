@@ -1,6 +1,8 @@
 ﻿
 var user;
 var pass;
+var IsLoggedIn = false;
+
 
 function CreateAccount() {
 
@@ -9,18 +11,18 @@ function CreateAccount() {
 
     if (user && pass) {
 
-
-        $.ajax({
-            url: 'https://api.apispreadsheets.com/data/3973/',
-            type: 'post',
-            data: $("#myForm").serializeArray(),
-            success: function () {
+        fetch("https://api.apispreadsheets.com/data/3973/", {
+            method: "POST",
+            body: JSON.stringify({ "data": { "Password": pass, "Username": user } }),
+        }).then(res => {
+            if (res.status === 201) {
+                // SUCCESS
                 alert("Successful")
-            },
-            error: function () {
-                alert("An Error Has Occurred")
             }
-        });
+            else {
+                // ERROR
+            }
+        })
     }
     else {
         document.getElementById("headline").innerHTML = "Please fill in all the empty fields"
@@ -38,8 +40,19 @@ function LogIn()
                 res.json().then(data => {
                     const yourData = data
                     console.log(yourData)
-                    document.getElementById("headline").innerHTML = " Hello, " + user;
-                }).catch(err => console.log(err))
+                    
+                    if (yourData.data.length != 0) {
+                        document.getElementById("headline").innerHTML = " Hello, " + user;
+                        IsLoggedIn = true;
+                        if (IsLoggedIn) {
+                            document.getElementById("btnGoToDeckPage").style.display = "block";
+                        }
+                    }
+                    else {
+                        document.getElementById("headline").innerHTML = "Information Entered Does Not Match A User";
+                    }
+
+                    }).catch(err => console.log(err))
             }
             else {
                 // ERROR
@@ -51,3 +64,10 @@ function LogIn()
         document.getElementById("headline").innerHTML = "Please fill in all the empty fields"
     }
 }
+
+
+function GoToDeckPage() {
+    location.href = "PersonalDeckPage.html";
+}
+
+

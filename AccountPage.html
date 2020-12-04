@@ -10,6 +10,11 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="res/scripts/apibridge.js"></script>
     <script src="res/scripts/AccountPageJS.js"></script>
+    <style>
+        #btnGoToDeckPage{
+            display:none;
+        }
+    </style>
 </head>
 <body>
     <h1>Account Page</h1>
@@ -29,5 +34,7 @@
     <button onclick="LogIn()">Log In</button>
 
     <h2 id="headline"></h2>
+
+    <button id="btnGoToDeckPage" onclick="GoToDeckPage()">Go to Deck Page</button>
 </body>
 </html>
