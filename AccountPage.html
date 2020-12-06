@@ -3,6 +3,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="design.css">
+    <link rel="stylesheet" href="res/styles/AccountPageStyles.css">
     <title>Account Page</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -11,30 +13,40 @@
     <script src="res/scripts/apibridge.js"></script>
     <script src="res/scripts/AccountPageJS.js"></script>
     <style>
-        #btnGoToDeckPage{
-            display:none;
-        }
+
     </style>
 </head>
 <body>
+    <div id="header">Hearth</div>
+    <div id="menubar">
+        <button class="menubutton" onclick="GoToHomePage()">Home</button>
+        <button class="menubutton" onclick="GoToDeckPage()">Cards</button>
+        <button class="menubutton">Creators</button>
+        <button class="menubutton">Links</button>
+        <button class="menubutton" onclick="GoToLogInPage()">Log In</button>
+    </div>
     <h1>Account Page</h1>
-    <form id="myForm">
-        <label>Username</label>
-        <br />
-        <input name="Username" />
-        <br />
-        <label>Password</label>
-        <br />
-        <input name="Password" />
-        <br />
-        <br />
-    </form>
+    <div id="accountForm">
+        <form id="myForm">
+            <label>Username</label>
+            <br />
+            <input name="Username" />
+            <br />
+            <label>Password</label>
+            <br />
+            <input type="password" name="Password" />
+            <br />
+            <br />
+        </form>
+    </div>
 
-    <button onclick="CreateAccount()">Create Account</button>
-    <button onclick="LogIn()">Log In</button>
+    <div id="accountContent">
+        <button onclick="CreateAccount()">Create Account</button>
+        <button onclick="LogIn()">Log In</button>
 
-    <h2 id="headline"></h2>
+        <h2 id="headline"></h2>
 
-    <button id="btnGoToDeckPage" onclick="GoToDeckPage()">Go to Deck Page</button>
+        <button id="btnGoToDeckPage" onclick="GoToDeckPage()">Go to Deck Page</button>
+    </div>
 </body>
 </html>

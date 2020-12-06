@@ -66,7 +66,7 @@ function LogIn()
                         document.getElementById("headline").innerHTML = " Hello, " + user;
                         IsLoggedIn = true;
                         if (IsLoggedIn) {
-                            document.getElementById("btnGoToDeckPage").style.display = "block";
+                            location.href = "PersonalDeckPage.html";
                         }
                     }
                     else {
@@ -86,6 +86,22 @@ function LogIn()
     }
 }
 
+
+function GoToDeckPage() {
+    location.href = "PersonalDeckPage.html";
+}
+
+function GoToHomePage() {
+    location.href = "home.html";
+}
+
+function GoToLogInPage() {
+    location.href = "AccountPage.html";
+}
+
+function GoToDeckPage() {
+    location.href = "PersonalDeckPage.html";
+}
 
 function GoToDeckPage() {
     location.href = "PersonalDeckPage.html";

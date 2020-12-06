@@ -1,0 +1,18 @@
+﻿#btnGoToDeckPage {
+    visibility:hidden;
+}
+
+h1 {
+    height: fit-content;
+    color: saddlebrown;
+    font-size: 81px;
+    text-align: center;
+}
+
+#accountForm{
+    text-align:center;
+}
+
+#accountContent{
+    text-align:center;
+}
