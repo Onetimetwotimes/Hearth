@@ -212,7 +212,7 @@ async function LoadDeck(deckIDCode)
         cardListToLoad.forEach(c => {
             deckB.push(c.id);
             $("#deckCardList").html($("#deckCardList").html() + CardData(c));
-        });
+        }); 
         var a = await Promise.resolve(deckB.build()).data;
         deck_builder = deckB;
         
