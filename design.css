@@ -1,0 +1,31 @@
+body{
+    background-color: blanchedalmond;
+}
+
+#header{
+    background-color: maroon;
+    height: fit-content;
+    color: gold;
+    font-size: 81px;
+    text-align: center;
+}
+
+#menubar{
+    background-color: saddlebrown;
+    height: fit-content;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.menubutton{
+    background-color: saddlebrown;
+    height: fit-content;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.menubutton:hover{
+    color: gold;
+}
