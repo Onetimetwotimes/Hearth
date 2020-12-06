@@ -89,6 +89,8 @@ async function getCard(id) {
 async function getDeck(deckCode) {
     return result = await Promise.resolve(getAPICall(DECKS_TARGET,
         {
+            'region' : "us",
+            'locale' : "en_US",
             'code': deckCode
         }));
 }
@@ -121,7 +123,7 @@ class deckBuilder {
      * @param {any} cardID
      */
     remove(cardID) {
-        let index = this.cards.indexOf(cardID);
+        let index = this.cards.indexOf(parseInt(cardID));
         if (index > -1) {
             this.cards.splice(index, 1);
         }

@@ -13,6 +13,7 @@
         <button onclick="showPage('deckBuilder');">Deck Builder</button>
         <button onclick="showPage('newDeckSetup');">Deck Setup</button>
         <button onclick="showPage('deckList');">Deck List</button>
+        <button><a href="AccountPage.html">Go To Account page</a></button>
         <br/><br/><br/>
         <div id="deckBuilder">
                 <!--Left side: deck-->
@@ -30,6 +31,9 @@
                                 <h3 class="deckInfo" id="deckClass">Class of deck</h3>
                                 <h4 class="deckInfo" id="classInfo">Stuff about the chosen hero class thingy</h4>
                                 <h3 class="deckInfo" id="cardCount">0 / 30 cards</h3>
+                                <input id="deckIDUser" placeholder="Enter Deck ID" />
+                                <button onclick="LoadDeck();">Load Deck</button>
+                                <button onclick="ClearDeckList();">Clear Deck</button>
                                 <hr class="solid" />
                             </td>
                         </tr>
@@ -47,6 +51,383 @@
                             <th>
                                 <h1>Cards</h1>
                             </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- <input id="searchCardName" style="width: 90%; margin-top: 1%; margin-left: 5%; margin-right: 5%;" placeholder="Keyword"/> -->
+
+                                <form style="padding: 10px; float: left;">
+                                    <div class="multiselect">
+                                      <div class="selectBox" onclick="showCheckboxes('attackChecks')">
+                                        <select>
+                                          <option>Attack Points</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                      </div>
+                                      <div class="checkboxClass" id="attackChecks">
+
+                                        <label for="one">
+                                          <input type="checkbox" id="oneA" />One
+                                        </label>
+                                        
+                                        <label for="two">
+                                          <input type="checkbox" id="twoA" />Two
+                                        </label>
+                                        
+                                        <label for="three">
+                                          <input type="checkbox" id="threeA" />Three
+                                        </label>
+                                        
+                                        <label for="four">
+                                          <input type="checkbox" id="fourA" />Four
+                                        </label>
+                                        
+                                        <label for="five">
+                                          <input type="checkbox" id="fiveA" />Five
+                                        </label>
+                                        
+                                        <label for="six">
+                                          <input type="checkbox" id="sixA" />Six
+                                        </label>
+                                        
+                                        <label for="seven">
+                                          <input type="checkbox" id="sevenA" />Seven
+                                        </label>
+                                          
+                                        <label for="eight">
+                                          <input type="checkbox" id="eightA" />Eight
+                                        </label>
+                                          
+                                        <label for="nine">
+                                          <input type="checkbox" id="nineA" />Nine
+                                        </label>
+                                          
+                                        <label for="tenp">
+                                          <input type="checkbox" id="tenpA" />Ten+
+                                        </label>
+                                      </div>
+                                    </div>
+                                </form>
+
+                                <form style="padding: 10px; float: left;">
+                                    <div class="multiselect">
+                                      <div class="selectBox" onclick="showCheckboxes('healthChecks')">
+                                        <select>
+                                          <option>Health</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                      </div>
+                                      <div class="checkboxClass" id="healthChecks">
+
+                                        <label for="one">
+                                            <input type="checkbox" id="oneH" />One
+                                          </label>
+                                          
+                                          <label for="two">
+                                            <input type="checkbox" id="twoH" />Two
+                                          </label>
+                                          
+                                          <label for="three">
+                                            <input type="checkbox" id="threeH" />Three
+                                          </label>
+                                          
+                                          <label for="four">
+                                            <input type="checkbox" id="fourH" />Four
+                                          </label>
+                                          
+                                          <label for="five">
+                                            <input type="checkbox" id="fiveH" />Five
+                                          </label>
+                                          
+                                          <label for="six">
+                                            <input type="checkbox" id="sixH" />Six
+                                          </label>
+                                          
+                                          <label for="seven">
+                                            <input type="checkbox" id="sevenH" />Seven
+                                          </label>
+                                            
+                                          <label for="eight">
+                                            <input type="checkbox" id="eightH" />Eight
+                                          </label>
+                                            
+                                          <label for="nine">
+                                            <input type="checkbox" id="nineH" />Nine
+                                          </label>
+                                            
+                                          <label for="tenp">
+                                            <input type="checkbox" id="tenpH" />Ten+
+                                          </label>
+                                      </div>
+                                    </div>
+                                </form>
+
+                                <form style="padding: 10px; float: left;">
+                                    <div class="multiselect">
+                                      <div class="selectBox" onclick="showCheckboxes('typeChecks')">
+                                        <select>
+                                          <option>Card Type</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                      </div>
+                                      <div class="checkboxClass" id="typeChecks">
+
+                                        <label for="minion">
+                                            <input type="checkbox" id="minion" />Minion
+                                          </label>
+                                          
+                                          <label for="spell">
+                                            <input type="checkbox" id="spell" />Spell
+                                          </label>
+                                          
+                                          <label for="weapon">
+                                            <input type="checkbox" id="weapon" />Weapon
+                                          </label>
+                                      </div>
+                                    </div>
+                                </form>
+
+                                <form style="padding: 10px; float: left;">
+                                    <div class="multiselect">
+                                      <div class="selectBox" onclick="showCheckboxes('rarityChecks')">
+                                        <select>
+                                          <option>Rarity</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                      </div>
+                                      <div class="checkboxClass" id="rarityChecks">
+
+                                        <label for="common">
+                                            <input type="checkbox" id="common" />Common
+                                          </label>
+                                          
+                                          <label for="free">
+                                            <input type="checkbox" id="free" />Free
+                                          </label>
+                                          
+                                          <label for="rare">
+                                            <input type="checkbox" id="rare" />Rare
+                                          </label>
+
+                                          <label for="epic">
+                                            <input type="checkbox" id="epic" />Epic
+                                          </label>
+                                          
+                                          <label for="legendary">
+                                            <input type="checkbox" id="legendary" />Legendary
+                                          </label>
+                                      </div>
+                                    </div>
+                                </form>
+
+                                <form style="padding: 10px; float: left;">
+                                    <div class="multiselect">
+                                      <div class="selectBox" onclick="showCheckboxes('minionChecks')">
+                                        <select>
+                                          <option>Minion Type</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                      </div>
+                                      <div class="checkboxClass" id="minionChecks">
+
+                                        <label for="beast">
+                                            <input type="checkbox" id="beast" />Beast
+                                          </label>
+                                          
+                                          <label for="demon">
+                                            <input type="checkbox" id="demon" />Demon
+                                          </label>
+                                          
+                                          <label for="dragon">
+                                            <input type="checkbox" id="dragon" />Dragon
+                                          </label>
+
+                                          <label for="elemental">
+                                            <input type="checkbox" id="elemental" />Elemental
+                                          </label>
+                                          
+                                          <label for="mech">
+                                            <input type="checkbox" id="mech" />Mech
+                                          </label>
+
+                                          <label for="murloc">
+                                            <input type="checkbox" id="murloc" />Murloc
+                                          </label>
+
+                                          <label for="pirate">
+                                            <input type="checkbox" id="pirate" />Pirate
+                                          </label>
+
+                                          <label for="totem">
+                                            <input type="checkbox" id="totem" />Totem
+                                          </label>
+                                      </div>
+                                    </div>
+                                </form>
+                                
+                                <form style="padding: 10px; float: left;">
+                                  <div class="multiselect">
+                                    <div class="selectBox" onclick="showCheckboxes('keywordChecks')">
+                                      <select>
+                                        <option>Minion Type</option>
+                                      </select>
+                                      <div class="overSelect"></div>
+                                    </div>
+                                    <div class="checkboxClass" id="keywordChecks">
+
+                                      <label for="adapt">
+                                          <input type="checkbox" id="adapt" />Adapt
+                                        </label>
+                                        
+                                        <label for="battlecry">
+                                          <input type="checkbox" id="battlecry" />Battlecry
+                                        </label>
+                                        
+                                        <label for="charge">
+                                          <input type="checkbox" id="charge" />Charge
+                                        </label>
+
+                                        <label for="combo">
+                                          <input type="checkbox" id="combo" />Combo
+                                        </label>
+                                        
+                                        <label for="corrupt">
+                                          <input type="checkbox" id="corrupt" />Corrupt
+                                        </label>
+
+                                        <label for="counter">
+                                          <input type="checkbox" id="counter" />Counter
+                                        </label>
+
+                                        <label for="deathrattle">
+                                          <input type="checkbox" id="deathrattle" />Deathrattle
+                                        </label>
+
+                                        <label for="discover">
+                                          <input type="checkbox" id="discover" />Discover
+                                        </label>
+
+                                        <label for="divineshield">
+                                          <input type="checkbox" id="divineshield" />Divine Shield
+                                        </label>
+
+                                        <label for="echo">
+                                          <input type="checkbox" id="echo" />Echo
+                                        </label>
+
+                                        <label for="freeze">
+                                          <input type="checkbox" id="freeze" />Freeze
+                                        </label>
+
+                                        <label for="immune">
+                                          <input type="checkbox" id="immune" />Immune
+                                        </label>
+
+                                        <label for="inspire">
+                                          <input type="checkbox" id="inspire" />Inspire
+                                        </label>
+
+                                        <label for="invoke">
+                                          <input type="checkbox" id="invoke" />Invoke
+                                        </label>
+
+                                        <label for="lackey">
+                                          <input type="checkbox" id="lackey" />Lackey
+                                        </label>
+
+                                        <label for="lifesteal">
+                                          <input type="checkbox" id="lifesteal" />Lifesteal
+                                        </label>
+
+                                        <label for="magnetic">
+                                          <input type="checkbox" id="magnetic" />Magnetic
+                                        </label>
+
+                                        <label for="mega-windfury">
+                                          <input type="checkbox" id="mega-windfury" />Mega-Windfury
+                                        </label>
+
+                                        <label for="outcast">
+                                          <input type="checkbox" id="outcast" />Outcast
+                                        </label>
+
+                                        <label for="overkill">
+                                          <input type="checkbox" id="overkill" />Overkill
+                                        </label>
+
+                                        <label for="overload">
+                                          <input type="checkbox" id="overload" />Overload
+                                        </label>
+
+                                        <label for="poisonous">
+                                          <input type="checkbox" id="poisonous" />Poisonous
+                                        </label>
+
+                                        <label for="quest">
+                                          <input type="checkbox" id="quest" />Quest
+                                        </label>
+
+                                        <label for="reborn">
+                                          <input type="checkbox" id="reborn" />Reborn
+                                        </label>
+
+                                        <label for="recruit">
+                                          <input type="checkbox" id="recruit" />Recruit
+                                        </label>
+
+                                        <label for="rush">
+                                          <input type="checkbox" id="rush" />Rush
+                                        </label>
+
+                                        <label for="secret">
+                                          <input type="checkbox" id="secret" />Secret
+                                        </label>
+
+                                        <label for="sidequest">
+                                          <input type="checkbox" id="sidequest" />Sidequest
+                                        </label>
+
+                                        <label for="silence">
+                                          <input type="checkbox" id="silence" />Silence
+                                        </label>
+
+                                        <label for="spareparts">
+                                          <input type="checkbox" id="spareparts" />Spare Parts
+                                        </label>
+
+                                        <label for="spelldamage">
+                                          <input type="checkbox" id="spelldamage" />Spell Damage
+                                        </label>
+
+                                        <label for="spellburst">
+                                          <input type="checkbox" id="spellburst" />Spellburst
+                                        </label>
+
+                                        <label for="startofcombat">
+                                          <input type="checkbox" id="startofcombat" />Start of Combat
+                                        </label>
+
+                                        <label for="stealth">
+                                          <input type="checkbox" id="stealth" />Stealth
+                                        </label>
+
+                                        <label for="taunt">
+                                          <input type="checkbox" id="taunt" />Taunt
+                                        </label>
+
+                                        <label for="twinspell">
+                                          <input type="checkbox" id="twinspell" />Twinspell
+                                        </label>
+
+                                        <label for="windfury">
+                                          <input type="checkbox" id="windfury" />Windfury
+                                        </label>
+                                    </div>
+                                  </div>
+                                </form>
+                                
+                                <button onclick="SetParams();" style="padding: 10px; float: left;">Search</button>
+                            </td>
                         </tr>
                         <tr>
                             <td id="cardListSection" class="grid-container">
