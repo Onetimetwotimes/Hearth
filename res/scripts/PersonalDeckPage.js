@@ -1,14 +1,8 @@
 var currentPageNum = 1;
 var selectedCard;
 
-var currentDeckList = [];
-var cardDataObj = {};
-/*
-Each cardDataObj will have
-num - number of this card in the deck
-max - max number of this card allowed in the deck
-card - the card object returned from the API
-*/
+var deck_builder = new deckBuilder;
+var deckID;
 
 /*
 RARITYIDs
@@ -28,6 +22,11 @@ function showPage(txtNameThing)
             $("#deckBuilder").show();
             $("#newDeckSetup").hide();
             $("#deckList").hide();
+
+            // $("#searchCardName").on('input', function(e) {
+            //     ClearAllCardsInList();
+            //     loadMoreCards({"region" : "us", "page" : currentPageNum, "keyword" : $("#searchCardName").value});
+            //  });
 
             loadMoreCards({"region" : "us", "page" : currentPageNum});
             break;
@@ -89,7 +88,6 @@ async function loadMoreCards(params)
     }
 
     cardList = cardList.data;
-    console.log(cardList);
 
     if(currentPageNum < cardList.pageCount);
     cardList.cards.forEach(c => {
@@ -117,10 +115,14 @@ async function loadMoreCards(params)
     currentPageNum++;
 }
 
-
-function AddCardToDeck(cardList, cardId)
+function ClearAllCardsInList()
 {
-    if(currentDeckList.length < 30)
+    $("#cardListSection").html("");
+}
+
+async function AddCardToDeck(cardList, cardId)
+{
+    if(deck_builder.cards.length < 30)
     {
         var card;
         cardList.forEach(c => {
@@ -132,7 +134,7 @@ function AddCardToDeck(cardList, cardId)
         });
         
         var addCard = true;
-        currentDeckList.forEach(c => {
+        deck_builder.cards.forEach(c => {
             if(c.id == card.id)
             {
                 addCard = false;
@@ -140,12 +142,17 @@ function AddCardToDeck(cardList, cardId)
             }
         });
         
-        if(addCard)
+        if(addCard && card)
         {
-            currentDeckList[currentDeckList.length] = card;
+            deck_builder.push(card.id);
             $("#" + card.id).appendTo("#deckCardList");
-            $("#cardCount").html(currentDeckList.length + " / 30 cards");
+            $("#cardCount").html(deck_builder.cards.length + " / 30 cards");
         }
+    }
+    else
+    {
+        let deckID = await Promise.resolve(deck_builder.build());
+        deckID = deckID.data;
     }
 }
 
@@ -155,3 +162,66 @@ $(window).scroll(function() {
         loadMoreCards({"region" : "us", "page" : currentPageNum});
     }
  });
+
+
+
+function showCheckboxes(checks) {
+  var checkboxes = document.getElementById(checks);
+  if (checkboxes.style.display == "none") {
+    checkboxes.style.display = "block";
+  } else {
+    checkboxes.style.display = "none";
+  }
+}
+
+function ClearDeckList()
+{
+    for (let i = deck_builder.cards.length - 1; i >= 0; i--) {
+        deck_builder.remove(document.getElementById("deckCardList").children[i].id);
+        $("#" + document.getElementById("deckCardList").children[i].id).appendTo("#cardListSection");
+        $("#cardCount").html(deck_builder.cards.length + " / 30 cards");
+    }
+}
+
+async function LoadDeck(deckIDCode)
+{
+    ClearDeckList();
+
+    var deckB = new deckBuilder;
+
+    if(deckIDCode)
+    {
+        var d = await Promise.resolve(deckIDCode);
+        var cardListToLoad = d.data.cards;
+        console.log(cardListToLoad);
+        cardListToLoad.forEach(c => {
+            deckB.push(c.id);
+            $("#deckCardList").html($("#deckCardList").html() + CardData(c));
+        });
+        var a = await Promise.resolve(deckB.build()).data;
+        deck_builder = deckB;
+        
+        $("#cardCount").html(deck_builder.cards.length + " / 30 cards");  
+    }
+    else
+    {
+        var d = await Promise.resolve(getDeck($("#deckIDUser").val()));
+        $("#deckIDUser").val("");
+        var cardListToLoad = d.data.cards;
+        console.log(cardListToLoad);
+        cardListToLoad.forEach(c => {
+            deckB.push(c.id);
+            $("#deckCardList").html($("#deckCardList").html() + CardData(c));
+        });
+        var a = await Promise.resolve(deckB.build()).data;
+        deck_builder = deckB;
+        
+        $("#cardCount").html(deck_builder.cards.length + " / 30 cards");   
+    }
+
+}
+
+function SetParams()
+{
+    
+}
