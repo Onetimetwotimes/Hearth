@@ -16,7 +16,7 @@
 
     </style>
 </head>
-<body>
+<body onload="ChangeContent()">
     <div id="header">Hearth</div>
     <div id="menubar">
         <button class="menubutton" onclick="GoToHomePage()">Home</button>
@@ -25,6 +25,7 @@
         <button class="menubutton">Links</button>
         <button class="menubutton" onclick="GoToLogInPage()">Log In</button>
     </div>
+    <p1 id="userGreeting"></p1>
     <h1>Account Page</h1>
     <div id="accountForm">
         <form id="myForm">
@@ -47,6 +48,7 @@
         <h2 id="headline"></h2>
 
         <button id="btnGoToDeckPage" onclick="GoToDeckPage()">Go to Deck Page</button>
+        
     </div>
 </body>
 </html>
