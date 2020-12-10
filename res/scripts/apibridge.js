@@ -1,7 +1,9 @@
 const AUTH_TARGET = 'https://us.battle.net/oauth/authorize';
 const TOKEN_TARGET = 'https://us.battle.net/oauth/token';
-const CARDSEARCH_TARGET = 'https://us.api.blizzard.com/hearthstone/cards';
 
+const CARDS_TARGET = 'https://us.api.blizzard.com/hearthstone/cards';
+const DECKS_TARGET = 'https://us.api.blizzard.com/hearthstone/deck';
+const CARDSEARCH_TARGET = 'https://us.api.blizzard.com/hearthstone/cards';
 
 var apiToken;
 
@@ -69,7 +71,7 @@ async function getAPICall(url, data) {
  */
 async function cardsearch(params) {
     params.locale = "en_US";
-    return result = await Promise.resolve(getAPICall(CARDSEARCH_TARGET, params));
+    return result = await Promise.resolve(getAPICall(CARDS_TARGET, params));
 }
 
 /**
@@ -77,7 +79,71 @@ async function cardsearch(params) {
  * @param {number} id
  */
 async function getCard(id) {
-    return result = await Promise.resolve(getAPICall(`${CARDSEARCH_TARGET}/${id}`));
+    return result = await Promise.resolve(getAPICall(`${CARDS_TARGET}/${id}`));
+}
+
+/**
+ * 
+ * @param {string} deckCode
+ */
+async function getDeck(deckCode) {
+    return result = await Promise.resolve(getAPICall(DECKS_TARGET,
+        {
+            'region' : "us",
+            'locale' : "en_US",
+            'code': deckCode
+        }));
+}
+
+class deckBuilder {
+    cards;
+    hero;
+    constructor() {
+        this.cards = new Array();
+        this.hero = -1;
+    }
+
+    /**
+     * push the provided cardID onto the card stack
+     * @param {number} cardID
+     */
+    push(cardID) {
+        this.cards.push(cardID);
+    }
+
+    /**
+     * 
+     * @param {Array} cardID
+     */
+    concat(cardIDs) {
+        this.cards = this.cards.concat(cardIDs);
+    }
+    /**
+     * remove the provided cardID from the card stack
+     * @param {any} cardID
+     */
+    remove(cardID) {
+        let index = this.cards.indexOf(parseInt(cardID));
+        if (index > -1) {
+            this.cards.splice(index, 1);
+        }
+    }
+
+    /**
+     * build this deck via an API call and return the api response
+     */
+    async build() {
+        
+        let data = {
+            "ids": this.cards.toString()
+        }
+        if (this.hero != -1) {
+            data.hero = this.hero;
+        }
+        let result = await Promise.resolve(getAPICall(DECKS_TARGET, data));
+
+        return result;
+    }
 }
 
 
