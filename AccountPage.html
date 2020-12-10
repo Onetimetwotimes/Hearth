@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<!--Spreadsheet url https://api.apispreadsheets.com/data/3973/ -->
+<!--Spreadsheet url https://api.apispreadsheets.com/data/4792/ -->
 <html>
 
 <head>
@@ -27,6 +27,7 @@
     </div>
     <p1 id="userGreeting"></p1>
     <h1>Account Page</h1>
+    <!--Copy the account form-->
     <div id="accountForm">
         <form id="myForm">
             <label>Username</label>
@@ -37,17 +38,29 @@
             <br />
             <input type="password" name="Password" />
             <br />
+            <!--Only get this information Start-->
+            <label>DeckName</label>
             <br />
+            <input name="DeckName" />
+            <br />
+            <label>DeckID</label>
+            <br />
+            <input name="DeckID" />
+            <br />
+            <br />
+    <!--End-->
         </form>
     </div>
-
     <div id="accountContent">
-        <button onclick="CreateAccount()">Create Account</button>
-        <button onclick="LogIn()">Log In</button>
+        <button id="btnCreateAccount" onclick="CreateAccount()" style="visibility:visible">Create Account</button>
+        <button id="btnLogIn" onclick="LogIn()"style="visibility:visible">Log In</button>
 
         <h2 id="headline"></h2>
 
         <button id="btnGoToDeckPage" onclick="GoToDeckPage()">Go to Deck Page</button>
+        <button id="btnLogOut" onclick="LogOut()" style="visibility:hidden;">Log Out</button>
+        <!--Copy button below. This will add the deck-->
+        <button id="btnAddDeck" onclick="AddDeckID()">Add Deck</button>
         
     </div>
 </body>
