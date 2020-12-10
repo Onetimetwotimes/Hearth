@@ -14,15 +14,14 @@ var passNew = sessionStorage.getItem("passKey");
 var IsLoggedInNew = sessionStorage.getItem("IsLoggedInKey");
 var deckIDNew = GetDeckID();
 var deckNameNew = GetDeckName();
-//var deckIDTest = sessionStorage.getItem("deckIDKey");
 
 function ChangeContent() {
-    console.log(userNew);
-    console.log(IsLoggedInNew);
-    console.log(deckNameNew);
-    console.log(deckIDNew);
 
-  //  IsLoggedIn = IsLoggedInNew;
+    console.log(GetDeckName());
+    console.log(GetDeckID());
+
+    //UpdateSheet();
+
 
     if (userNew && userNew != "null")
     {
@@ -33,16 +32,7 @@ function ChangeContent() {
         document.getElementById("userGreeting").innerHTML = "Hello Guest!";
     }
 
-    if(IsLoggedIn) {
-        document.getElementById("btnLogOut").style.visibility = "block";
-        document.getElementById("btnCreateAccount").style.visibility = "none";
-        document.getElementById("btnLogIn").style.visibility = "none";
-    }
-    else {
-        document.getElementById("btnLogOut").style.visibility = "none";
-        document.getElementById("btnCreateAccount").style.visibility = "block";
-        document.getElementById("btnLogIn").style.visibility = "block";
-    }
+    HideButtons();
 }
 
 
@@ -154,9 +144,12 @@ function LogOut() {
 
 //This is the button's function to add deck. First checks if user is logged in, then checks if user entered anything in the
 //deck id field and deck name field. These fields cannot be empty
-function AddDeckID() {
-    var dName = document.getElementsByName("DeckName")[0].value;
-    var dID = document.getElementsByName("DeckID")[0].value;
+function AddDeckID(dName, dID) {
+    if (dName == null && dID == null) {
+        dName = document.getElementsByName("DeckName")[0].value;
+        dID = document.getElementsByName("DeckID")[0].value;
+    }
+
     var currentDeckID;
     var currentDeckName;
 
@@ -191,6 +184,28 @@ function AddDeckID() {
     }
 }
 
+//Function below allows the user to edit the deckId when given the deck name
+function EditDeckID(dName, newDeckID) {
+    if (dName == null && newDeckID == null) {
+        dName = document.getElementsByName("searchForDeck")[0].value;
+        newDeckID = document.getElementsByName("newDeckID")[0].value;
+    }
+    var allDeckID = GetDeckID();
+    var isDeckTrue = GetDeckName().includes(dName);
+    var newAllID;
+
+    if (isDeckTrue) {
+        var nameIndex = GetDeckName().indexOf(dName);
+        allDeckID[nameIndex] = newDeckID;
+
+        newAllID = allDeckID.join();
+        sessionStorage.setItem("deckIDKey", newAllID);
+        //Reload Page To Update
+        }
+    else {
+        document.getElementById("edit1").innerHTML = "Invalid";
+    }
+}
 
 //Get functions will return the deckIds and Deck names into an array. Place this where needed
 
@@ -226,27 +241,56 @@ function GetIsLoggedIn() {
     return sessionStorage.getItem("IsLoggedInKey");
 }
 
+function HideButtons() {
+    var check = false;
+    if (userNew && userNew != "null") {
+        check = true;
+    }
+    else {
+        check = false;
+    }
+
+    if (check) {
+        document.getElementById("btnLogOut").style.visibility = "visible";
+        document.getElementById("btnCreateAccount").style.visibility = "hidden";
+        document.getElementById("btnLogIn").style.visibility = "hidden";
+    }
+    else {
+        document.getElementById("btnLogOut").style.visibility = "hidden";
+        document.getElementById("btnCreateAccount").style.visibility = "visible";
+        document.getElementById("btnLogIn").style.visibility = "visible";
+    }
+}
+
+function UpdateSheet() {
+    var logInCheck = (GetIsLoggedIn() == 'true');
+    var dName = GetDeckNameRaw();
+    var id = GetDeckIDRaw();
+
+    if (logInCheck) {
+        fetch("https://api.apispreadsheets.com/data/4792/", {
+            method: "POST",
+            body: JSON.stringify({ "data": { "DeckID": id, "DeckName": dName}, "query": "select*from4792whereUsername='" + userNew + "'" }),
+        }).then(res => {
+            if (res.status === 201) {
+                // SUCCESS
+                alert("Successful")
+            }
+            else {
+                // ERROR
+            }
+        })
+    }
+}
 
 function GoToDeckPage() {
     location.href = "PersonalDeckPage.html";
 }
 
-function GoToHomePage() {
-    location.href = "home.html";
-}
 
 function GoToLogInPage() {
     location.href = "AccountPage.html";
 }
-
-function GoToDeckPage() {
-    location.href = "PersonalDeckPage.html";
-}
-
-function GoToDeckPage() {
-    location.href = "PersonalDeckPage.html";
-}
-
 
 //Below is for adding a greeting to the user. If user is logged in, it says the user's name, otherwise it says guest
 
