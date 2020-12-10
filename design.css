@@ -29,3 +29,25 @@ body{
 .menubutton:hover{
     color: gold;
 }
+
+h1{
+    text-align: center;
+    font-size: 60px;
+}
+
+p{
+    text-align: center;
+    font-size: 24px;
+}
+
+#homelogin {
+    text-align: center;
+}
+
+.hlg{
+    text-align: center;
+    background-color: saddlebrown;
+    height: fit-content;
+    color: white;
+    font-size: 24px;
+}
