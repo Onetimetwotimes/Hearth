@@ -14,15 +14,15 @@ var passNew = sessionStorage.getItem("passKey");
 var IsLoggedInNew = sessionStorage.getItem("IsLoggedInKey");
 var deckIDNew = GetDeckID();
 var deckNameNew = GetDeckName();
+//var deckIDTest = sessionStorage.getItem("deckIDKey");
 
 function ChangeContent() {
     console.log(userNew);
     console.log(IsLoggedInNew);
     console.log(deckNameNew);
     console.log(deckIDNew);
-    //console.log(deckIDNew[0])
 
-    IsLoggedIn = IsLoggedInNew;
+  //  IsLoggedIn = IsLoggedInNew;
 
     if (userNew && userNew != "null")
     {
@@ -34,14 +34,14 @@ function ChangeContent() {
     }
 
     if(IsLoggedIn) {
-        document.getElementById("btnLogOut").style.visibility = "visible";
-        document.getElementById("btnCreateAccount").style.visibility = "hidden";
-        document.getElementById("btnLogIn").style.visibility = "hidden";
+        document.getElementById("btnLogOut").style.visibility = "block";
+        document.getElementById("btnCreateAccount").style.visibility = "none";
+        document.getElementById("btnLogIn").style.visibility = "none";
     }
     else {
-        document.getElementById("btnLogOut").style.visibility = "hidden'";
-        document.getElementById("btnCreateAccount").style.visibility = "visible";
-        document.getElementById("btnLogIn").style.visibility = "visible";
+        document.getElementById("btnLogOut").style.visibility = "none";
+        document.getElementById("btnCreateAccount").style.visibility = "block";
+        document.getElementById("btnLogIn").style.visibility = "block";
     }
 }
 
@@ -167,8 +167,8 @@ function AddDeckID() {
                     // SUCCESS
                     res.json().then(data => {
                         const yourData = data
-                        currentDeckName = yourData.data[0].DeckName + "," + dName;
-                        currentDeckID = yourData.data[0].DeckID + "," + dID;
+                        currentDeckName = GetDeckNameRaw() + "," + dName;
+                        currentDeckID = GetDeckIDRaw() + "," + dID;
                         sessionStorage.setItem("deckNameKey", currentDeckName);
                         sessionStorage.setItem("deckIDKey", currentDeckID);
                     }).catch(err => console.log(err))
@@ -208,6 +208,18 @@ function GetDeckName() {
     dName = sessionStorage.getItem("deckNameKey");
     splitDeckName = dName.split(",");
     return splitDeckName;
+}
+
+function GetDeckIDRaw() {
+    var id;
+    id = sessionStorage.getItem("deckIDKey");
+    return id;
+}
+
+function GetDeckNameRaw() {
+    var dName;
+    dName = sessionStorage.getItem("deckNameKey");
+    return dName;
 }
 
 function GetIsLoggedIn() {
