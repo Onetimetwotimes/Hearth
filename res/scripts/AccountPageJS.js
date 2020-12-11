@@ -32,6 +32,7 @@ function ChangeContent() {
         document.getElementById("userGreeting").innerHTML = "Hello Guest!";
     }
 
+    document.getElementById("btnLogOut").style.visibility = "hidden";
     HideButtons();
 }
 
@@ -40,10 +41,10 @@ function CreateAccount() {
 
     user = document.getElementsByName("Username")[0].value;
     pass = document.getElementsByName("Password")[0].value;
-    deckName = document.getElementsByName("DeckName")[0].value;
-    deckIDTemp = document.getElementsByName("DeckID")[0].value;
+    //deckName = document.getElementsByName("DeckName")[0].value;
+    //deckIDTemp = document.getElementsByName("DeckID")[0].value;
 
-    if (user && pass && deckName && deckIDTemp) {
+    if (user && pass/* && deckName && deckIDTemp*/) {
         fetch("https://api.apispreadsheets.com/data/4792/?query=select*from4792whereUsername='" + user + "'").then(res => {
             if (res.status === 200) {
                 // SUCCESS
@@ -110,7 +111,7 @@ function LogIn()
                         sessionStorage.setItem("deckNameKey", currentDeckName);
                         sessionStorage.setItem("deckIDKey", currentDeckID);
                         if (IsLoggedIn) {
-                            //location.href = "PersonalDeckPage.html";
+                            location.href = "PersonalDeckPage.html";
                         }
                     }
                     else {
@@ -170,7 +171,7 @@ function AddDeckID(dName, dID) {
                     // ERROR
                 }
                 //change location to the page that is being used. This is to refresh the page
-                location.href = "AccountPage.html"
+                location.href = "PersonalDeckPage.html"
             })
         }
         else {
