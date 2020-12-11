@@ -7,21 +7,29 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="res/scripts/apibridge.js"></script>
+        <script src="res/scripts/AccountPageJS.js"></script>
         <script src="res/scripts/PersonalDeckPage.js"></script>
     </head>
     <!--Neck-->
     <body onload="showPage('newDeckSetup')">
-      <div id="header">Hearth</div>
-      <div id="menubar">
-          <button class="menubutton" onclick="GoToHomePage()">Home</button>
-          <button class="menubutton" onclick="GoToDeckPage()">Cards</button>
-          <button class="menubutton" onclick="GoToDeckPage()">Deck</button>
-          <button class="menubutton">Creators</button>
-          <button class="menubutton" onclick="GoToLogInPage()">Log In</button>
-      </div>
-        <button onclick="showPage('deckBuilder');">Deck Builder</button>
+        <div id="header">
+            Hearth
+        </div>
+        <div id="menubar">
+            <a href="home.html">
+                <button class="menubutton">Home</button>
+            </a>
+            <a href="PersonalDeckPage.html">
+                <button class="menubutton">Deck</button>
+            </a>
+            <button class="menubutton">Creators</button>
+            <a href="AccountPage.html">
+                <button class="menubutton">Log In</button>
+            </a>
+        </div>
+        <!-- <button onclick="showPage('deckBuilder');">Deck Builder</button>
         <button onclick="showPage('newDeckSetup');">Deck Setup</button>
-        <button onclick="showPage('deckList');">Deck List</button>
+        <button onclick="showPage('deckList');">Deck List</button> -->
         <br/><br/><br/>
         <p1 id="userGreeting"></p1>
         <div id="deckBuilder">
@@ -35,13 +43,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <h3 class="deckInfo" id="deckClass">Class of deck</h3>
-                                <h4 class="deckInfo" id="classInfo">Stuff about the chosen hero class thingy</h4>
                                 <h3 class="deckInfo" id="cardCount">0 / 30 cards</h3>
                                 <input id="deckIDUser" placeholder="Enter Deck ID" />
                                 <button onclick="LoadDeck();">Load Deck</button>
                                 <button onclick="ClearDeckList();">Clear Deck</button>
                                 <button onclick="BuildDeck();">Get DeckID</button>
+                                <button onclick="showPage('deckList');">Go to deck list</button>
                             </td>
                         </tr>
                         <tr>
@@ -61,10 +68,10 @@
                         </tr>
                         <tr>
                             <td>                                
-                                <button onclick="ChangDivVis();" style="padding: 10px; margin: 10px;">Filters</button>
+                                <button onclick="ChangDivVis('divFilters');" style="padding: 10px; margin: 10px;">Filters</button>
                                 <button onclick="RefreshCards();" style="padding: 10px; margin: 10px;">Refresh Cards</button>
                                 <br/><br/>
-                                <div id="divFilters" style="display: block;">
+                                <div id="divFilters" style="display: none;">
                                   <select onchange="SetParams();" id="attackOpt" style="padding: 10px; float: left; margin: 10px;">
                                     <option value=-1>Attack: Any</option>
                                     <option value=0>Attack: 0</option>
@@ -180,7 +187,7 @@
                 <form id="myForm">
                     <label>Deck Name</label>
                     <br />
-                    <input name="deckName" maxlength="20" required/>
+                    <input id="deckNameIn" name="deckName" maxlength="20" required/>
                     <br />
                     <br />
                     <label>Select a Hero</label>
@@ -213,7 +220,7 @@
             </div>
         </div>
         <div id="deckList">
-            <p>This is page three</p>
+            
         </div>
     </body>
 </html>
