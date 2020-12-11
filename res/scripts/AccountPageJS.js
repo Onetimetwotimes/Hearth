@@ -171,7 +171,8 @@ function AddDeckID(dName, dID) {
                     // ERROR
                 }
                 //change location to the page that is being used. This is to refresh the page
-                location.href = "PersonalDeckPage.html"
+                //location.href = "PersonalDeckPage.html"
+                //showPage('deckBuilder');
             })
         }
         else {
@@ -204,7 +205,8 @@ function EditDeckID(dName, newDeckID) {
         //Reload Page To Update
         }
     else {
-        document.getElementById("edit1").innerHTML = "Invalid";
+        alert("Invalid");
+        //document.getElementById("edit1").innerHTML = "Invalid";
     }
 }
 

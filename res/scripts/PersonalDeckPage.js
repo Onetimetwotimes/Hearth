@@ -9,19 +9,11 @@ var userNew = sessionStorage.getItem("userKey");
 var fullCardList = [];
 
 var classOfCurrentDeck = "";
-/*
-RARITYIDs
-1 - common
-2 - free
-3 - rare
-4 - epic
-5 - legendary
-*/
 
 //Remove this when done testing basics
 function showPage(txtNameThing)
 {
-    if (userNew)
+    if (userNew != "null")
     {
         document.getElementById("userGreeting").innerHTML = "Welcome Back " + userNew;
     }
@@ -29,17 +21,13 @@ function showPage(txtNameThing)
     {
         document.getElementById("userGreeting").innerHTML = "Hello Guest!";
     }
+
     switch(txtNameThing)
     {
         case "deckBuilder":
             $("#deckBuilder").show();
             $("#newDeckSetup").hide();
             $("#deckList").hide();
-
-            // $("#searchCardName").on('input', function(e) {
-            //     ClearAllCardsInList();
-            //     loadMoreCards({"region" : "us", "page" : currentPageNum, "keyword" : $("#searchCardName").value});
-            //  });
 
             loadMoreCards({"region" : "us", "page" : currentPageNum});
             break;
@@ -52,6 +40,8 @@ function showPage(txtNameThing)
             $("#deckBuilder").hide();
             $("#newDeckSetup").hide();
             $("#deckList").show();
+
+            LoadDeckList();
             break;
     }
 }
@@ -64,7 +54,7 @@ function CardData(c)
     ">" +
         "<div class='cardDataLarge' style='background-image: url(" + String.raw`${c.image}` + ");'></div>" +
         "<div class='cardDataSmall' style='display: none'>" + 
-            "<p style='float: left; background-color: #2c6bd1; width: 5%; height: 50%; text-align: center; margin: 10px;'>" + 0 + "</p>" + 
+            "<p style='float: left; background-color: #2c6bd1; width: 5%; height: 50%; text-align: center; margin: 10px;'>" + c.manaCost + "</p>" + 
             "<p style='float: left; width: 45%; height: 100%; text-align: left; margin: 10px; margin-left: 0px;'>" + c.name + "</p>" +
             "<img style='float: right;' src='" + String.raw`${c.cropImage}` + "'; />" +
         "</div>" +
@@ -94,6 +84,18 @@ function RefreshCards()
 
 }
 
+function ChangDivVis(id)
+{
+    if($("#" + id).css('display') == 'none')
+    {
+        $("#" + id).css('display', "block");
+    }
+    else
+    {
+        $("#" + id).css('display', "none");
+    }
+}
+
 async function loadMoreCards(params)
 {
     params.class = classOfCurrentDeck;
@@ -102,12 +104,25 @@ async function loadMoreCards(params)
     cardList = cardList.data;
 
     fullCardList[currentPageNum - 1] = cardList.cards;
-    console.log(fullCardList);
+
     if(currentPageNum < cardList.pageCount);
     cardList.cards.forEach(c => {
         if(c.cardTypeId != 3)
         {
-            $("#cardListSection").html($("#cardListSection").html() + CardData(c));
+            var addCard = true;
+            if(deck_builder.cards.length >= 1)
+            {
+                deck_builder.cards.forEach(x => {
+                    if(c.id == x)
+                    {
+                        addCard = false;
+                    }
+                });
+            }
+            if(addCard == true)
+            {
+                $("#cardListSection").html($("#cardListSection").html() + CardData(c));
+            }
         }
     });
 
@@ -131,7 +146,7 @@ async function loadMoreCards(params)
                 if(c.id == cards[i].id)
                 {
                     $("#" + cards[i].id).data('CardData', c);
-                    console.log($("#" + cards[i].id).data('CardData'));
+                    //console.log($("#" + cards[i].id).data('CardData'));
                     return;
                 }
             });
@@ -159,8 +174,11 @@ async function BuildDeck()
     let deckID = await Promise.resolve(deck_builder.build());
     deckID = deckID.data;
 
-    console.log(deckID);
     $("#deckIDUser").val(deckID.deckCode);
+
+    alert("A" + $("#deckName").html() + "A");
+
+    EditDeckID($("#deckName").html(), deckID.deckCode);
 }
 
 async function Card_OnClick(cardList, cardId, sender)
@@ -176,7 +194,7 @@ async function Card_OnClick(cardList, cardId, sender)
     else
     {
         let val = await AddCardToDeck(cardList, cardId);
-        console.log(val);
+        //console.log(val);
         if(val == true)
         {
             $("#" + cardId + " .cardDataLarge").css("display", "none");
@@ -190,14 +208,12 @@ async function AddCardToDeck(cardList, cardId)
     if(deck_builder.cards.length < 30)
     {
         var card = $("#" + cardId).data('CardData');
-        console.log(card);
         
         var addCard = true;
         deck_builder.cards.forEach(c => {
             if(c.id == cardId)
             {
                 addCard = false;
-                console.log("Hello");
                 return false;
             }
         });
@@ -244,13 +260,32 @@ async function LoadDeck(deckIDCode)
 
     if(deckIDCode)
     {
-        var d = await Promise.resolve(deckIDCode);
+        var d = await Promise.resolve(getDeck(deckIDCode));
         var cardListToLoad = d.data.cards;
-        console.log(cardListToLoad);
-        cardListToLoad.forEach(c => {
-            deckB.push(c.id);
-            $("#deckCardList").html($("#deckCardList").html() + CardData(c));
-        });
+
+        for(var i = 0; i < cardListToLoad.length; i++) (function(i)
+        {
+            console.log(cardListToLoad[i].id);
+            deckB.push(cardListToLoad[i].id);
+            $("#deckCardList").html($("#deckCardList").html() + CardData(cardListToLoad[i]));
+
+            $("#" + cardListToLoad[i].id + " .cardDataLarge").css("display", "none");
+            $("#" + cardListToLoad[i].id + " .cardDataSmall").css("display", "block");
+
+            document.getElementById(cardListToLoad[i].id).addEventListener("click", 
+                function() 
+                {
+                    console.log("Hello");
+                    var current = document.getElementsByClassName("active");
+                    if(current.length > 0)
+                    {
+                        current[0].className = current[0].className.replace(" active", "");
+                        Card_OnClick(fullCardList[currentPageNum - 1], cardListToLoad[i].id, this);
+                    }
+                    this.className += " active";
+                });
+        })(i);
+        
         var a = await Promise.resolve(deckB.build()).data;
         deck_builder = deckB;
         
@@ -261,16 +296,20 @@ async function LoadDeck(deckIDCode)
         var d = await Promise.resolve(getDeck($("#deckIDUser").val()));
         $("#deckIDUser").val("");
         var cardListToLoad = d.data.cards;
-        console.log(cardListToLoad);
         cardListToLoad.forEach(c => {
             deckB.push(c.id);
             $("#deckCardList").html($("#deckCardList").html() + CardData(c));
+
+            $("#" + c.id + " .cardDataLarge").css("display", "none");
+            $("#" + c.id + " .cardDataSmall").css("display", "block");
         });
         var a = await Promise.resolve(deckB.build()).data;
         deck_builder = deckB;
         
         $("#cardCount").html(deck_builder.cards.length + " / 30 cards");   
     }
+
+    RefreshCards();
 
 }
 
@@ -340,15 +379,74 @@ function GoToDeckPage() {
 
 function CreateNewDeck()
 {
-    var hero = $("#heroSelect").val();
-    if(hero != -1)
+    if(userNew && userNew != "null")
     {
-        $("#heroTypeTitle").html(hero);
+        var hero = $("#heroSelect").val();
+        if(hero != -1)
+        {
+            $("#heroTypeTitle").html(hero.toUpperCase());
+        }
+        else
+        {
+            $("#heroTypeTitle").html("No hero chosen. Hero will be selected when deck is built");
+        }
+        
+        AddDeckID($("#deckNameIn").val(), " ");
+
+        $("#deckName").html($("#deckNameIn").val());
+        
+        showPage('deckBuilder');
     }
     else
     {
-        $("#heroTypeTitle").html("No hero chosen. Hero will be selected when deck is built");
+        $("#headline").html("Please login to create a deck")
+    }
+}
+
+function DeckDivData(name, deckID)
+{
+    var retString = "" +
+    "<div id='" + deckID + name + "' style='background-color : lightgray;'>" +
+    "   <p>" + name + "</p>" +
+    "   <p>" + deckID + "</p>" +
+    "</div>";
+
+    return retString;
+}
+
+function LoadDeckList()
+{
+    $("#deckList").html("");
+    var deckIDs = GetDeckID();
+    var deckNames = GetDeckName();
+
+    for(var i = 0; i < deckIDs.length; i++)
+    {
+        $("#deckList").html($("#deckList").html() + DeckDivData(deckNames[i], deckIDs[i]));
     }
 
+    for(var i = 0; i < deckIDs.length; i++) (function(i)
+    {
+        var d = deckIDs[i];
+        var n = deckNames[i];
+
+        console.log(deckIDs[i] + deckNames[i] + " " + i);
+        document.getElementById(deckIDs[i] + deckNames[i]).addEventListener("click", function () 
+        {
+            DeckNameClick(d, n, i);
+        });
+    })(i);
+}
+
+async function DeckNameClick(deckID, deckName, i)
+{
+    console.log(i);
+    console.log(deckID);
+    ClearAllCardsInList();
+    $("#deckName").html(deckName);
+    await LoadDeck(deckID);
+    var deck = await getDeck(deckID);
+    console.log(deck);
+    $("#heroTypeTitle").html(deck.data.class.slug.toUpperCase());
     showPage('deckBuilder');
 }
